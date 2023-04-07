@@ -1,0 +1,22 @@
+/* Add some basic styling to the suggestion dropdown */
+.suggestion-dropdown {
+    position: absolute;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    
+    border-radius: 2px;
+    z-index: 1000000;
+}
+
+.suggestion-item {
+    padding:10px 10px;
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+}
+
+.suggestion-item:hover,.selected {
+    background-color: #989898b6;
+}
