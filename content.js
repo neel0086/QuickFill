@@ -1,14 +1,14 @@
-var executed = false;
 
-if (!executed) {
-    var dropdownIndex = -1;
-    executed=true
-    console.log(chrome.runtime.getManifest().name)
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        var inputFields = document.querySelectorAll('input[type="text"], input[type="search"]');
+var dropdownIndex = -1;
+executed = true
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    var inputFields = document.querySelectorAll('input[type="text"], input[type="search"]');
+    if ("suggestions" in message) {
+        console.log("Hy from sugg")
         inputFields.forEach(function (input) {
+            input.setAttribute("autocomplete", "off");
             input.addEventListener('input', function () {
-                input.setAttribute("autocomplete", "off");
+
                 var searchKey = input.value.toLowerCase();
                 var temp = [];
 
@@ -29,6 +29,12 @@ if (!executed) {
                 // Display the suggestions as a dropdown
                 var dropdown = document.createElement('div');
                 dropdown.classList.add('suggestion-dropdown');
+
+                dropdown.style.position = 'absolute';
+                dropdown.style.top = input.offsetTop + input.offsetHeight + 20 + 'px';
+                dropdown.style.left = input.offsetLeft + 'px';
+
+
                 temp.forEach(function (suggestion) {
                     var suggestionItem = document.createElement('div');
                     suggestionItem.classList.add('suggestion-item');
@@ -43,12 +49,14 @@ if (!executed) {
                 input.parentNode.appendChild(dropdown);
             });
             input.addEventListener('keyup', function (event) {
+                event.preventDefault()
+                console.log("Hello fron keyup")
                 var dropdown = input.parentNode.querySelector('.suggestion-dropdown');
                 if (dropdown) {
                     var suggestionItems = dropdown.querySelectorAll('.suggestion-item');
                     if (event.keyCode === 40) { // down arrow
                         event.preventDefault();
-                        if(dropdownIndex>=0 && dropdownIndex<suggestionItems.length && suggestionItems[dropdownIndex].classList.contains("selected")){
+                        if (dropdownIndex >= 0 && dropdownIndex < suggestionItems.length && suggestionItems[dropdownIndex].classList.contains("selected")) {
                             suggestionItems[dropdownIndex].classList.remove('selected');
                         }
                         dropdownIndex++;
@@ -64,15 +72,15 @@ if (!executed) {
                         }
                     } else if (event.keyCode === 38) { // up arrow
                         event.preventDefault();
-                        if(dropdownIndex>=0 && dropdownIndex<suggestionItems.length && suggestionItems[dropdownIndex].classList.contains("selected")){
+                        if (dropdownIndex >= 0 && dropdownIndex < suggestionItems.length && suggestionItems[dropdownIndex].classList.contains("selected")) {
                             suggestionItems[dropdownIndex].classList.remove('selected');
                         }
                         dropdownIndex--;
                         if (dropdownIndex >= 0) {
                             suggestionItems[dropdownIndex].classList.add('selected');
                             input.value = suggestionItems[dropdownIndex].textContent;
-                        } 
-                        else{
+                        }
+                        else {
                             console.log(dropdownIndex)
                             dropdownIndex = suggestionItems.length - 1
                             suggestionItems[dropdownIndex].classList.add('selected');
@@ -88,11 +96,7 @@ if (!executed) {
                     }
                 }
             });
-
-
         });
-
-
         // Hide the suggestion dropdown when the user clicks outside of it
         document.addEventListener('click', function (event) {
             var dropdowns = document.querySelectorAll('.suggestion-dropdown');
@@ -102,6 +106,19 @@ if (!executed) {
                 }
             });
         });
-        // }
-    });
-}
+    }
+    else {
+        
+
+        inputFields.forEach(function (input) {
+            console.log(input)
+            input.setAttribute("autocomplete", "on");
+            input.removeEventListener('input', input.inputHandler);
+            input.removeEventListener('keyup', input.keyupHandler);
+            var dropdowns = document.querySelectorAll('.suggestion-dropdown');
+            dropdowns.forEach(function (dropdown) {
+                dropdown.remove();
+            });
+        });
+    }
+});
