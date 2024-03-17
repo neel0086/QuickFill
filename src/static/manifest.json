@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "QuickFill",
+  "icons": {
+    "300": "icon.png"
+  },
+  "version": "0.2",
+  "permissions": [
+    "identity",
+    "identity.email",
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://ajax.googleapis.com;"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon.png"
+    },
+    "default_title": "Speed up your words",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [],
+  "web_accessible_resources": [
+    {
+      "resources": ["content.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggleSuggestion": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Toggle Suggestion"
+    },
+    "autoFill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "AutoFill"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+/* Add some basic styling to the suggestion dropdown */
+:root {
+  --primary-color: #101820ff;
+  --secondary-color: #050709fe;
+  --table-header: rgb(0, 0, 0);
+  --text-color: #ffffff;
+  --secondry-text-color: #101820ff;
+  --font-family: Verdana, Geneva, Tahoma, sans-serif;
+  --font-size-input: 15px;
+}
+.suggestion-dropdown {
+  position: absolute;
+  background-color: var(--primary-color);
+  min-width: 160px;
+  box-shadow: 18px 18px 20px 0px rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  border-radius: 2px;
+  z-index: 100000000000;
+}
+
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 15px;
+}
+
+.suggestion-item:hover,
+.selected {
+  background-color: #989898b6;
+}
+.suggestion-dropdown:not(:empty)::after {
+  border-bottom: 15px solid var(--secondary-color);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  content: "";
+  height: 0;
+  left: 10%;
+  margin-left: -15px;
+  margin-top: -15px;
+  position: absolute;
+  top: 0;
+  width: 0;
+  z-index: 1;
+}
+/* //////////////////////////////////////////////////////////////////////////////////// */
+.suggestion-list {
+  position: absolute;
+  justify-content: space-around;
+  margin: 3px;
+  /* background-color: var(--primary-color); */
+  min-width: 50%;
+  max-width: inherit;
+  color: var(--text-color);
+  z-index: 100000000000;
+  background: rgba(91, 89, 89, 0.25);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.suggestion-item-list {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  color: var(--secondary-color);
+  font-size: 15px;
+}
+
+.suggestion-item-list:hover,
+.selected {
+  background: rgba(91, 89, 89, 0.25);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
