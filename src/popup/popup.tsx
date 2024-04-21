@@ -6,9 +6,9 @@ import Support from "../components/Support/Support";
 import Navbar from "../components/Navbar/Navbar";
 import Help from "../components/Help/Help";
 import { db } from "../firebase.js";
-import Upi from "../components/Payment/Upi";
-
+import ExtPay from "extpay";
 const Popup: React.FC = () => {
+  const extpay = ExtPay("quickfill");
   const [activeTab, setActiveTab] = useState("Home");
   const [email, setEmail] = useState("");
   chrome.identity.getProfileUserInfo(
@@ -18,6 +18,14 @@ const Popup: React.FC = () => {
       setEmail(userInfo.email);
     }
   );
+  extpay.getUser().then((user) => {
+    console.log(user);
+  });
+
+  const handleButtonClick = () => {
+    extpay.openPaymentPage();
+  };
+
   useEffect(() => {
     // Function to fetch user email and save to Firestore
     const fetchAndSaveEmail = async () => {
@@ -52,8 +60,8 @@ const Popup: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/support" element={<Support />} />
         <Route path="/help" element={<Help />} />
-        <Route path="/upi" element={<Upi />} />
       </Routes>
+      {/* <button onClick={handleButtonClick}>REedirect</button> */}
     </Router>
   );
 };

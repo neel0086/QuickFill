@@ -16,7 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({ setActiveTab, activeTab }) => {
   return (
     <div className="flex justify-between headerrow text-2lg">
       <div className="flex items-center">
-        <img src="display_icon.png" alt="logo" className="logo" />
+        <img src="images/display_icon.png" alt="logo" className="logo" />
       </div>
       <div className="w-full">
         <ul className="flex justify-center gap-6">

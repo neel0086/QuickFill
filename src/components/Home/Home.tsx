@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { SelectImage } from "../CustomIcon/CustomIcon";
+import { SelectImage, SelectSVG } from "../CustomIcon/CustomIcon";
+import AlertModal from "./AlertModal";
+import UpdateModal from "./UpdateModal";
+import ViewModal from "./ViewModal";
 
 const Home: React.FC = () => {
   const [data, setData] = useState<{ [key: string]: string }>({});
   const [inpKey, setInpKey] = useState("");
   const [inpVal, setInpVal] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [selectedKey, setSelectedKey] = useState("");
+  const [view, setView] = useState(null);
+  const [updateView, setUpdateView] = useState(null);
 
   useEffect(() => {
     loadTableData();
@@ -18,6 +24,24 @@ const Home: React.FC = () => {
         setData(storedData);
       }
     });
+  };
+
+  const adjustBracketSpacing = () => {
+    console.log(inpKey);
+
+    if (inpKey.indexOf("(") !== -1 && inpKey.indexOf("(") !== 0) {
+      setInpKey(inpKey.replace("(", " ("));
+    }
+
+    // Add space after closing parenthesis if not already there
+    if (
+      inpKey.lastIndexOf(")") !== -1 &&
+      inpKey.lastIndexOf(")") !== inpKey.length - 1
+    ) {
+      setInpKey(inpKey.replace(")", ") "));
+    }
+    console.log(inpKey);
+    setInpKey(inpKey);
   };
 
   const handleAddBtnClick = () => {
@@ -36,8 +60,8 @@ const Home: React.FC = () => {
       );
       return;
     }
-
-    const newData = { ...data, [inpKey.toLowerCase()]: inpVal };
+    adjustBracketSpacing;
+    const newData = { ...data, [inpKey]: inpVal };
     setData(newData);
     chrome.storage.local.set({ myData: newData }, () => {
       console.log("Data stored.");
@@ -48,6 +72,7 @@ const Home: React.FC = () => {
   };
 
   const handleUpdateBtnClick = () => {
+    adjustBracketSpacing;
     const newData = { ...data, [inpKey.toLowerCase()]: inpVal };
     setData(newData);
     chrome.storage.local.set({ myData: newData }, () => {
@@ -61,24 +86,50 @@ const Home: React.FC = () => {
 
   const handleCloseAlert = () => {
     setAlertMessage("");
+    setView(null);
+    setUpdateView(null);
+  };
+
+  const handleDeleteClick = (keyToDelete: any) => {
+    const newData = { ...data };
+    delete newData[keyToDelete];
+    setData(newData);
+    chrome.storage.local.set({ myData: newData }, () => {
+      console.log("Key-value pair deleted.");
+    });
+  };
+
+  const handleUpdate = (newKey: string, newValue: string) => {
+    const newData = { ...data };
+    delete newData[selectedKey];
+    newData[newKey] = newValue;
+    setData(newData);
+    chrome.storage.local.set({ myData: newData }, () => {
+      console.log("Key-value pair updated.");
+    });
+    setUpdateView(null);
   };
 
   return (
     <div>
       {alertMessage && (
-        <div id="customAlert" className="modal" style={{ display: "block" }}>
-          <div className="modal-content">
-            <p id="alertMessage">{alertMessage}</p>
-          </div>
-          <div className="buttons">
-            <button id="closeAlert" onClick={handleCloseAlert}>
-              Close
-            </button>
-            <button id="updateBtn" onClick={handleUpdateBtnClick}>
-              Update
-            </button>
-          </div>
-        </div>
+        <AlertModal
+          alertMessage={alertMessage}
+          handleCloseAlert={handleCloseAlert}
+          handleUpdateBtnClick={handleUpdateBtnClick}
+        />
+      )}
+
+      {updateView && (
+        <UpdateModal
+          keyValue={updateView}
+          handleCloseAlert={handleCloseAlert}
+          handleUpdate={handleUpdate}
+        />
+      )}
+
+      {view && (
+        <ViewModal keyValue={view} handleCloseAlert={handleCloseAlert} />
       )}
 
       <div className="inputrow">
@@ -119,6 +170,7 @@ const Home: React.FC = () => {
                   (might be value correponding to that field)
                 </span>
               </th>
+              <th className="header_val" style={{ width: "15%" }}></th>
             </tr>
           </thead>
           <tbody className="tbody">
@@ -135,6 +187,30 @@ const Home: React.FC = () => {
                   {key}
                 </td>
                 <td className="table_val">{value}</td>
+                <td className="table_val flex gap-2">
+                  <img
+                    src={SelectSVG("view")}
+                    alt="Action"
+                    className="w-6 cursor-pointer"
+                    onClick={() => setView([key, value])}
+                  />
+                  <img
+                    src={SelectSVG("update")}
+                    alt="Action"
+                    className="w-6 cursor-pointer"
+                    onClick={() => {
+                      setSelectedKey(key);
+                      setUpdateView([key, value]);
+                    }}
+                  />
+
+                  <img
+                    src={SelectSVG("delete")}
+                    alt="Action"
+                    className="w-6 cursor-pointer"
+                    onClick={() => handleDeleteClick(key)}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

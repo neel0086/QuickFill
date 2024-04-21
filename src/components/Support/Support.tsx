@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { SelectImage } from "../CustomIcon/CustomIcon";
 
 const Support: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const Support: React.FC = () => {
         <h1 className="text-2xl font-semibold mb-4">Follow Us</h1>
 
         <div className="flex items-center mt-6">
-          <img src="linkedin.png" className="w-10" />
+          <img src={SelectImage("linkedin")} className="w-10" />
           <div className="ml-2">
             <a
               className="font-semibold"
@@ -24,7 +25,7 @@ const Support: React.FC = () => {
         </div>
 
         <div className="flex items-center mt-12">
-          <img src="gmail.png" className="w-10" />
+          <img src={SelectImage("email")} className="w-10" />
           <div className="ml-2">
             <p className="font-semibold">Email</p>
             <p className="text-sm text-gray-100">
@@ -32,7 +33,7 @@ const Support: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center mt-12">
+        {/* <div className="flex items-center mt-12">
           <Link to="/upi">
             <img src="upi.png" className="w-10" />
           </Link>
@@ -45,7 +46,7 @@ const Support: React.FC = () => {
               Click on image to pay any amount that you can afford
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

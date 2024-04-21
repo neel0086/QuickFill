@@ -2,20 +2,31 @@ import React from "react";
 
 // Define a map of image names to their corresponding URLs
 const imageMap = {
-  menu: "menu.png",
-  email: "gmail.png",
-  name: "name.png",
-  address: "address.png",
-  location: "location.png",
-  gender: "gender.png",
-  linkedin: "linkedin.png",
-  github: "github.png",
-  website: "website.png",
-  leetcode: "leetcode.png",
-  codechef: "codechef.png",
-  codeforces: "codeforces.png",
-  sex: "gender.png",
-  school: "school.png",
+  menu: "images/menu.png",
+  email: "images/gmail.png",
+  name: "images/name.png",
+  address: "images/address.png",
+  location: "images/location.png",
+  gender: "images/gender.png",
+  linkedin: "images/linkedin.png",
+  github: "images/github.png",
+  website: "images/website.png",
+  leetcode: "images/leetcode.png",
+  codechef: "images/codechef.png",
+  codeforces: "images/codeforces.png",
+  sex: "images/gender.png",
+  school: "images/school.png",
+  facebook: "images/facebook.png",
+  instagram: "images/instagram.png",
+  twitter: "images/twitter.png",
+
+  // Add more mappings as needed
+};
+
+const svgMap = {
+  delete: "svgs/delete.svg",
+  view: "svgs/view.svg",
+  update: "svgs/update.svg",
   // Add more mappings as needed
 };
 
@@ -45,10 +56,23 @@ const synonymWord = (key: string) => {
 export const SelectImage = (key: string) => {
   key = synonymWord(key);
   const imageKeys = Object.keys(imageMap);
-  const matchingKey = imageKeys.find((imageKey) => key.includes(imageKey));
-  console.log(matchingKey);
+  const matchingKey = imageKeys.find((imageKey) =>
+    key.toLowerCase().includes(imageKey)
+  );
   if (matchingKey) {
     return imageMap[matchingKey];
+  } else {
+    return `https://api.dicebear.com/8.x/bottts-neutral/svg?seed=${key}`; // No matching key found in imageMap
+  }
+};
+export const SelectSVG = (key: string) => {
+  key = synonymWord(key);
+  const imageKeys = Object.keys(svgMap);
+  const matchingKey = imageKeys.find((imageKey) =>
+    key.toLowerCase().includes(imageKey)
+  );
+  if (matchingKey) {
+    return svgMap[matchingKey];
   } else {
     return false; // No matching key found in imageMap
   }

@@ -6,7 +6,8 @@
   --table-header-text: white;
   --text-color: #ffffff;
   --secondry-text-color: black;
-  --font-family: Verdana, Geneva, Tahoma, sans-serif;
+  /* --font-family: Verdana, Geneva, Tahoma, sans-serif; */
+  --font-family: Verdana, sans-serif;
   --font-size-input: 15px;
 }
 
@@ -120,31 +121,25 @@ svg {
 
 #tablist {
   font-family: var(--font-family);
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   width: 100%;
   table-layout: fixed;
   /* Ensure fixed table layout */
 }
 
 #tablist .table_val,
-#tablist th {
-  border: 1px solid #ddd;
+#tablist th,
+#tablist .table_key {
+  /* border-right: 0.5px inset #ddd; */
   padding: 10px 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: var(--font-size-input);
 }
-
-#tablist .table_key {
-  border: 1px solid #ddd;
-  padding: 10px 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: var(--font-size-input);
+#tablist th {
+  border-bottom: 0.5px inset #ddd;
 }
-
 #tablist tr:nth-child(even) {
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -160,7 +155,7 @@ svg {
 }
 
 #tablist th {
-  text-align: center;
+  text-align: start;
   background-color: var(--table-header);
   color: var(--text-color);
 }
@@ -272,4 +267,12 @@ svg {
 .buttons button#updateBtn {
   background: linear-gradient(#ea7079, #891a1a);
   margin-top: 2px;
+}
+
+.fade-in {
+  animation: fadeIn ease 0.5s;
+  -webkit-animation: fadeIn ease 0.5s;
+  -moz-animation: fadeIn ease 0.5s;
+  -o-animation: fadeIn ease 0.5s;
+  -ms-animation: fadeIn ease 0.5s;
 }

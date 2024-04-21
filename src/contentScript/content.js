@@ -362,7 +362,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     var keys = message.quickfill;
     inputFields.forEach(function (input) {
       var inputName = input.getAttribute("name");
-      var placeholder = input.getAttribute("placeholder");
+      var placeholder =
+        input.getAttribute("placeholder") || input.getAttribute("aria-label");
       var label =
         document.querySelector('label[for="' + input.name + '"]') ||
         document.querySelector('label[for="' + input.id + '"]');
