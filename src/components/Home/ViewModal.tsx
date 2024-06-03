@@ -14,7 +14,7 @@ const ViewModal: React.FC<ViewProps> = ({ keyValue, handleCloseAlert }) => {
           <p id="alertMessage">
             <b>KEY:</b> {keyValue[0]}
           </p>
-          <p id="alertMessage">
+          <p id="alertMessage overflow-auto	">
             <b>VALUE:</b> {keyValue[1]}
           </p>
         </div>

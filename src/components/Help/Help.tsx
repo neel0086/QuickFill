@@ -1,4 +1,5 @@
 import React from "react";
+import { SelectImage } from "../CustomIcon/CustomIcon";
 
 const Help: React.FC = () => {
   return (
@@ -26,7 +27,7 @@ const Help: React.FC = () => {
           </p>
           <div className="flex items-center">
             <img
-              src="help_img1.png"
+              src={SelectImage("help_img1.png")}
               className="w-80 border-2 border-white border-solid"
             />
             <div className="ml-2">
@@ -36,14 +37,36 @@ const Help: React.FC = () => {
             </div>
           </div>
           <div className="text-sm mt-4 mb-8">
-            <p>
-              1) 🛠️ Click "Enable Suggestion" to receive customized suggestions
-              based on your input (Key, Value).
-            </p>
-            <p className="text-sm mt-4">
-              2) 🚀 AutoFill: Automatically detects and fills in appropriate
-              information using a single click. (CMD/CRTL + SHIFT + L)
-            </p>
+            <div>
+              <p>
+                1) 🛠️ Click "Enable Suggestion" to receive customized
+                suggestions based on your input (Key, Value).
+              </p>
+            </div>
+            <div className="text-sm mt-4">
+              <p className="mb-2">
+                2) 🚀 AutoFill: Automatically detects and fills in appropriate
+                information using a single click.
+              </p>
+              <p>
+                Mac: <span className="font-bold">CMD + SHIFT + L</span>
+              </p>
+              <p>
+                Windows: <span className="font-bold">CTRL + SHIFT + L</span>
+              </p>
+            </div>
+            <div className="text-sm mt-4">
+              <p className="mb-2">
+                3) 🛠️ Click "Show Password" to show the password as sometimes
+                website doesn't provide option with show.
+              </p>
+              <p>
+                Mac: <span className="font-bold">CMD + SHIFT + P</span>
+              </p>
+              <p>
+                Windows: <span className="font-bold">CTRL + SHIFT + P</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>

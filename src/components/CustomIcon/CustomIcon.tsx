@@ -19,6 +19,7 @@ const imageMap = {
   facebook: "images/facebook.png",
   instagram: "images/instagram.png",
   twitter: "images/twitter.png",
+  help_img1: "images/help_img1.png",
 
   // Add more mappings as needed
 };

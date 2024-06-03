@@ -150,6 +150,28 @@ chrome.contextMenus.removeAll(function () {
   });
 });
 
+//SHOW PASSWROD CONNTEXT
+const showPassword = () => {
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: tabId, allFrames: true },
+      files: ["content.js"],
+    },
+    () => {
+      chrome.tabs.sendMessage(tabId, { showPassword: data }, { frameId: 0 });
+    }
+  );
+};
+
+chrome.contextMenus.removeAll(function () {
+  chrome.contextMenus.create({
+    id: "automate",
+    title: "AutoFill     (CMD/CTRL+SHIFT+L)",
+    contexts: ["all"],
+  });
+});
+
+//SWTICH CONTEXT MMENU AND ON COMMAND
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (tab) {
     if (info.menuItemId === "suggestion-toggle") {
@@ -157,6 +179,9 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     }
     if (info.menuItemId === "automate") {
       autoFill();
+    }
+    if (info.menuItemId === "showPassword") {
+      showPassword();
     }
   }
 });
@@ -166,10 +191,7 @@ chrome.commands.onCommand.addListener(function (command) {
     toggleSuggestion();
   } else if (command === "autoFill") {
     autoFill();
+  } else if (command === "showPassword") {
+    showPassword();
   }
 });
-
-// chrome.commands.getAll(function (commands) {
-//   commands.find((command) => command.name === "toggleSuggestion").shortcut;
-//   commands.find((command) => command.name === "autoFill").shortcut;
-// });

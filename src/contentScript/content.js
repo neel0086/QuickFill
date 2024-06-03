@@ -378,6 +378,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         placeHolderCheck(keys, inputName, input);
       }
     });
+  } else if ("showPassword" in message) {
+    var keys = message.showPassword;
+    inputFields.forEach(function (input) {
+      var inputType = input.getAttribute("type");
+      if (inputType === "password") {
+        input.type = "text";
+      }
+    });
   } else {
     inputFields.forEach(function (input) {
       input.setAttribute("autocomplete", "on");

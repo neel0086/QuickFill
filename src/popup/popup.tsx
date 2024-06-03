@@ -6,9 +6,7 @@ import Support from "../components/Support/Support";
 import Navbar from "../components/Navbar/Navbar";
 import Help from "../components/Help/Help";
 import { db } from "../firebase.js";
-import ExtPay from "extpay";
 const Popup: React.FC = () => {
-  const extpay = ExtPay("quickfill");
   const [activeTab, setActiveTab] = useState("Home");
   const [email, setEmail] = useState("");
   chrome.identity.getProfileUserInfo(
@@ -18,14 +16,6 @@ const Popup: React.FC = () => {
       setEmail(userInfo.email);
     }
   );
-  extpay.getUser().then((user) => {
-    console.log(user);
-  });
-
-  const handleButtonClick = () => {
-    extpay.openPaymentPage();
-  };
-
   useEffect(() => {
     // Function to fetch user email and save to Firestore
     const fetchAndSaveEmail = async () => {
